@@ -22,9 +22,11 @@ public:
     virtual ~Player();
 
     // Fonctions
-    int getScore(std::ifstream save);
-    int getMoves(std::ifstream save);
-    void save(std::ofstream save);
-    void load(std::ifstream save);
+    int getScore();
+    int getMoves();
+    std::vector<std::vector<int>> getGrille() const;
+    void reset();
+    void save(const std::string& filename);
+    void load(const std::string& filename);
 };
 #endif

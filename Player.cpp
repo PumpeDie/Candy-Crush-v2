@@ -3,7 +3,8 @@
 Player::Player() 
 {
     score_ = 0;
-    moves_ = 0;
+    moves_ = 10;
+    grille_ = std::vector<std::vector<int>>(10, std::vector<int>(10, 0));
 } 
 
 Player::~Player() 
@@ -11,29 +12,38 @@ Player::~Player()
 
 }
 
-int Player::getScore(std::ifstream save)
+int Player::getScore()
 {
-    int score;
-    save.open("data.dat");
-    save >> score_;
-    score = score_;
-    save.close();
-    return score;
+    return score_;
 }
 
-int Player::getMoves(std::ifstream save)
+int Player::getMoves()
 {
-    int moves;
-    save.open("data.dat");
-    save >> moves_;
-    moves = moves_;
-    save.close();
-    return moves;
+    return moves_;
 }
 
-void Player::save(std::ofstream save)
+std::vector<std::vector<int>> Player::getGrille() const 
 {
-    save.open("data.dat");
+    return grille_;
+}
+
+void Player::reset()
+{
+    score_ = 0;
+    moves_ = 10;
+    grille_ = std::vector<std::vector<int>>(10, std::vector<int>(10, 0));
+}
+void Player::save(const std::string& filename)
+{
+    std::ofstream save(filename); // Ouvre le fichier avec le nom spécifié
+    if (!save.is_open()) 
+    {
+        // Gestion de l'erreur
+        std::cerr << "Erreur lors de l'ouverture du fichier de sauvegarde." << std::endl;
+        return;
+    }
+
+    // Écriture des données dans le fichier
     save << score_ << std::endl;
     save << moves_ << std::endl;
     for (int i = 0; i < 10; i++)
@@ -42,13 +52,22 @@ void Player::save(std::ofstream save)
         {
             save << grille_[i][j];
         }
+        save << std::endl;
     }
     save.close();
 }
 
-void Player::load(std::ifstream save)
+void Player::load(const std::string& filename)
 {
-    save.open("data.dat");
+    std::ifstream save(filename); // Ouvre le fichier avec le nom spécifié
+    if (!save.is_open()) 
+    {
+        // Gestion de l'erreur
+        std::cerr << "Erreur lors de l'ouverture du fichier de chargement." << std::endl;
+        return;
+    }
+
+    // Lecture des données depuis le fichier
     save >> score_;
     save >> moves_;
     for (int i = 0; i < 10; i++)

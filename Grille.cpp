@@ -35,7 +35,7 @@ Grille::~Grille()
 }
 
 // Fonctions
-void Grille::update(sf::RenderWindow* window)
+void Grille::update(sf::RenderWindow* window, State& gamestate)
 {
 	//window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Jeu");
 	while (window->isOpen())
@@ -48,8 +48,8 @@ void Grille::update(sf::RenderWindow* window)
 			if (ev.type == sf::Event::KeyPressed) 
 				if (ev.key.code == sf::Keyboard::Escape)
 				{
-                	window->clear();
-					break;
+                	gamestate = State::InMenu;
+                	return;
 				}
 		}
 		window->clear();

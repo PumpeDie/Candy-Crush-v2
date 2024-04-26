@@ -23,7 +23,7 @@ void Game::initMenu()
 }
 
 // Constructeurs & Destructeurs
-Game::Game()
+Game::Game() : gamestate_(State::InMenu), window(nullptr), menu(nullptr), grille(nullptr), player(nullptr)
 {
     initWindow();
     initGrille();
@@ -37,6 +37,31 @@ Game::~Game()
     delete grille;
     delete menu;
     delete player;
+}
+
+// Fonctions pour la gestion des données du joueur
+int Game::getPlayerScore() const 
+{
+    std::ifstream save("data.dat");
+    if (!save.is_open()) {
+        // Gestion de l'erreur
+        return -1;
+    }
+    int score = player->getScore();
+    save.close();
+    return score;
+}
+
+int Game::getPlayerMoves() const 
+{
+    std::ifstream save("data.dat");
+    if (!save.is_open()) {
+        // Gestion de l'erreur
+        return -1;
+    }
+    int moves = player->getMoves();
+    save.close();
+    return moves;
 }
 
 
@@ -57,32 +82,48 @@ void Game::update()
     {
         if (ev.Event::type == sf::Event::Closed)
             window->close();
-        if (ev.type == sf::Event::KeyPressed) 
+        else if (gamestate_ == State::InMenu)
         {
-            if (ev.key.code == sf::Keyboard::Up) {
-                menu->MoveUp();
-                break;
-            }
-            if (ev.key.code == sf::Keyboard::Down) {
-                menu->MoveDown();
-                break;
-            }
-            if (ev.key.code == sf::Keyboard::Escape) {
-                window->close();
-                break;
-            }
-            if (ev.key.code == sf::Keyboard::Return) 
+            if (ev.type == sf::Event::KeyPressed) 
             {
-                if (menu->pressed() == 0)
-                    grille->update(window);
-                if (menu->pressed() == 1)
+                if (ev.key.code == sf::Keyboard::Up) {
+                    menu->MoveUp();
                     break;
-                if (menu->pressed() == 2)
+                }
+                if (ev.key.code == sf::Keyboard::Down) {
+                    menu->MoveDown();
                     break;
-                if (menu->pressed() == 3)
+                }
+                if (ev.key.code == sf::Keyboard::Escape) {
                     window->close();
+                    break;
+                }
+                if (ev.key.code == sf::Keyboard::Return) 
+                {
+                    switch (menu->pressed()) {
+                        case 0: // Nouvelle Partie
+                            player->reset();            // Réinitialiser les données du joueur
+                            gamestate_ = State::InGame;
+                            break;
+                        case 1: // Continuer
+                            player->load("data.dat");   // Charger le jeu depuis une sauvegarde
+                            gamestate_ = State::InGame;
+                            break;
+                        case 2: // Sauvegarder
+                            player->save("data.dat");   // Sauvegarder le jeu dans un fichier
+                            break;
+                        case 3: // Quitter
+                            window->close();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                }
             }
         }
+        else if (gamestate_ == State::InGame)
+            grille->update(window, gamestate_);
     }
 }
 
@@ -92,6 +133,9 @@ void Game::render()
     window->clear();
 
     // Affichage du nouveau frame
-    menu->render(*window);
+    if (gamestate_ == State::InMenu)
+        menu->render(*window);
+    else if (gamestate_ == State::InGame)
+        grille->render(*window);
     window->display();
 }

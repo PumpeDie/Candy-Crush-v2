@@ -7,6 +7,9 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
+// Forward declaration pour le type State
+enum State {InMenu, InGame};
+
 // Auteur : Samuel
 class Grille
 {
@@ -19,7 +22,7 @@ public:
     virtual ~Grille();
 
     // Fonctions
-    void update(sf::RenderWindow* window);
+    void update(sf::RenderWindow* window, State& gamestate);
     void render(sf::RenderWindow& window);
 };
 

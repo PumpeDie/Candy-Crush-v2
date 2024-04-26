@@ -7,8 +7,6 @@
 #include "Player.h"
 
 // Auteur : Samuel
-enum State {InMenu, InGame, None};
-
 class Game
 {
 private:
@@ -34,6 +32,10 @@ public:
     // Constructeurs & Destructeurs
     Game();
     virtual ~Game();
+
+    // Fonctions pour la gestion des données du joueur
+    int getPlayerScore() const;
+    int getPlayerMoves() const;
 
     // Fonctions
     void run();
