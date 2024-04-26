@@ -4,12 +4,25 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <random>
+#include <vector>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
 // Auteur : Samuel
+
+// Couleurs des bonbons
+enum CandyColor {
+    RED = 0,
+    BLUE = 1,
+    GREEN = 2,
+    YELLOW = 3,
+    MAGENTA = 4,
+    CYAN = 5
+};
+
 class Player 
 {
 private:
@@ -28,5 +41,8 @@ public:
     void reset();
     void save(const std::string& filename);
     void load(const std::string& filename);
+
+    // Fonction pour initialiser la grille avec des bonbons aléatoires
+    void initRandomCandies();
 };
 #endif

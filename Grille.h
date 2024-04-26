@@ -7,10 +7,11 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
-// Forward declaration pour le type State
+// Auteur : Samuel
+
+// Declaration pour le type State
 enum State {InMenu, InGame};
 
-// Auteur : Samuel
 class Grille
 {
 private:
