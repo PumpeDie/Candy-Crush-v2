@@ -2,6 +2,7 @@
 #define GRILLE_H
 
 #include <iostream>
+#include "Player.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -15,11 +16,12 @@ enum State {InMenu, InGame};
 class Grille
 {
 private:
+    Player* player_;
     std::vector<sf::RectangleShape> lines_;
     
 public:
     // Constructeur & Destructeur
-    Grille();
+    Grille(Player* player);
     virtual ~Grille();
 
     // Fonctions

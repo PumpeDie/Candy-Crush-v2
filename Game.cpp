@@ -9,7 +9,7 @@ void Game::initWindow()
 
 void Game::initGrille()
 {
-    grille = new Grille();
+    grille = new Grille(player);
 }
 
 void Game::initPlayer()
@@ -26,9 +26,9 @@ void Game::initMenu()
 Game::Game() : gamestate_(State::InMenu), window(nullptr), menu(nullptr), grille(nullptr), player(nullptr)
 {
     initWindow();
+    initPlayer();
     initGrille();
     initMenu();
-    initPlayer();
 }
 
 Game::~Game()

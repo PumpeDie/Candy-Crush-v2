@@ -1,6 +1,6 @@
 #include "Grille.h"
 
-Grille::Grille() 
+Grille::Grille(Player* player) : player_(player)
 {
     // Lignes verticales
 	for (int i = 0; i < 11; i++) {
@@ -60,6 +60,19 @@ void Grille::update(sf::RenderWindow* window, State& gamestate)
 
 void Grille::render(sf::RenderWindow& window) 
 {
+	// Dessiner les lignes de la grille
 	for (int i = 0; i < lines_.size(); i++)
 		window.draw(lines_[i]);
+
+	// Dessiner les bonbons sur la grille
+    auto grille = player_->getGrille(); // Récupérer la grille depuis player_
+    for (int i = 0; i < grille.size(); i++) {
+        for (int j = 0; j < grille[i].size(); j++) {
+            sf::CircleShape candy(15.f); // Taille arbitraire pour les bonbons
+            CandyColor color = static_cast<CandyColor>(grille[i][j]); // Obtenir la couleur associée au bonbon depuis player_
+            candy.setFillColor(getColorForCandy(color)); // Obtenir la couleur associée au bonbon
+            candy.setPosition(717 + i*50 + 3, 313 + j*50);
+            window.draw(candy);
+        }
+    }
 }

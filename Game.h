@@ -1,10 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "Candy.h"
 #include "Menu.h"
 #include "Grille.h"
-#include "Player.h"
 
 // Auteur : Samuel
 class Game

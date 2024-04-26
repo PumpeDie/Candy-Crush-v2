@@ -22,6 +22,7 @@ enum CandyColor {
     MAGENTA = 4,
     CYAN = 5
 };
+sf::Color getColorForCandy(CandyColor color);
 
 class Player 
 {
