@@ -5,7 +5,6 @@ void Game::initWindow()
 {
     window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Candy Crush");
     window->setFramerateLimit(60);
-    window->setVerticalSyncEnabled(false);
 }
 
 void Game::initGrille()
@@ -13,9 +12,9 @@ void Game::initGrille()
     grille = new Grille();
 }
 
-void Game::initCandy()
+void Game::initPlayer()
 {
-    candy = new Candy();
+    player = new Player();
 }
 
 void Game::initMenu()
@@ -29,7 +28,7 @@ Game::Game()
     initWindow();
     initGrille();
     initMenu();
-    initCandy();
+    initPlayer();
 }
 
 Game::~Game()
@@ -37,7 +36,7 @@ Game::~Game()
     delete window;
     delete grille;
     delete menu;
-    delete candy;
+    delete player;
 }
 
 
@@ -79,6 +78,8 @@ void Game::update()
                 if (menu->pressed() == 1)
                     break;
                 if (menu->pressed() == 2)
+                    break;
+                if (menu->pressed() == 3)
                     window->close();
             }
         }

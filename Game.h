@@ -4,10 +4,15 @@
 #include "Candy.h"
 #include "Menu.h"
 #include "Grille.h"
+#include "Player.h"
+
+// Auteur : Samuel
+enum State {InMenu, InGame, None};
 
 class Game
 {
 private:
+    State gamestate_;
     sf::RenderWindow* window;
 
     // Menu
@@ -16,14 +21,14 @@ private:
     // Grille
     Grille* grille;
 
-    // Bonbon
-    Candy* candy;
+    // Joueur
+    Player* player;
 
     // Fonctions privées
     void initWindow();
     void initMenu();
     void initGrille();
-    void initCandy();
+    void initPlayer();
 
 public:
     // Constructeurs & Destructeurs

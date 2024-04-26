@@ -37,7 +37,7 @@ Grille::~Grille()
 // Fonctions
 void Grille::update(sf::RenderWindow* window)
 {
-	window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Jeu");
+	//window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Jeu");
 	while (window->isOpen())
 	{
 		sf::Event ev;
@@ -47,7 +47,10 @@ void Grille::update(sf::RenderWindow* window)
 				window->close();
 			if (ev.type == sf::Event::KeyPressed) 
 				if (ev.key.code == sf::Keyboard::Escape)
-                	window->close();
+				{
+                	window->clear();
+					break;
+				}
 		}
 		window->clear();
 		render(*window);

@@ -17,13 +17,19 @@ Menu::Menu(float width, float height)
 	menuprincipal[1].setFillColor(sf::Color::White);
 	menuprincipal[1].setString("Continuer");
 	menuprincipal[1].setCharacterSize(90);
-	menuprincipal[1].setPosition(sf::Vector2f(300, height / 4 + 200));
+	menuprincipal[1].setPosition(sf::Vector2f(300, height / 4 + 150));
 
 	menuprincipal[2].setFont(font_);
 	menuprincipal[2].setFillColor(sf::Color::White);
-	menuprincipal[2].setString("Quitter");
+	menuprincipal[2].setString("Sauvegarder");
 	menuprincipal[2].setCharacterSize(90);
-	menuprincipal[2].setPosition(sf::Vector2f(300, height / 4 + 400));
+	menuprincipal[2].setPosition(sf::Vector2f(300, height / 4 + 300));
+
+	menuprincipal[3].setFont(font_);
+	menuprincipal[3].setFillColor(sf::Color::White);
+	menuprincipal[3].setString("Quitter");
+	menuprincipal[3].setCharacterSize(90);
+	menuprincipal[3].setPosition(sf::Vector2f(300, height / 4 + 450));
 
 	selected_ = 0;
 }
@@ -38,10 +44,10 @@ void Menu::setSelected(int n) {
 }
 
 void Menu::MoveDown() {
-	if (selected_ + 1 <= 3) { 											// Pas quitter
+	if (selected_ + 1 <= 4) { 											// Pas quitter
 		menuprincipal[selected_].setFillColor(sf::Color::White);
 		selected_++;
-		if (selected_ == 3)
+		if (selected_ == 4)
 			selected_ = 0;
 		menuprincipal[selected_].setFillColor(sf::Color{ 255, 204, 0 });
 	}
@@ -52,7 +58,7 @@ void Menu::MoveUp() {
 		menuprincipal[selected_].setFillColor(sf::Color::White);
 		selected_--;
 		if (selected_ == -1)
-			selected_ = 2;
+			selected_ = 3;
 		menuprincipal[selected_].setFillColor(sf::Color{ 255, 204, 0 });
 	}
 }
@@ -64,6 +70,6 @@ void Menu::update()
 
 void Menu::render(sf::RenderWindow& window)
 {
-    for (int i = 0; i<3; i++)
+    for (int i = 0; i<4; i++)
         window.draw(menuprincipal[i]);
 }

@@ -7,6 +7,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
+// Auteur : Samuel
 class Grille
 {
 private:

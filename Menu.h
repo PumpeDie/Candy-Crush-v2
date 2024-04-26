@@ -7,10 +7,11 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
+// Auteur : Samuel
 class Menu 
 {
 private:
-	sf::Text menuprincipal[3];
+	sf::Text menuprincipal[4];
 	sf::Font font_;
 	int selected_;
 public :
