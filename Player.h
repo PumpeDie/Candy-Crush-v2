@@ -39,7 +39,7 @@ public:
     // Fonctions
     int getScore();
     int getMoves();
-    std::vector<std::vector<int>> getGrille() const;
+    std::vector<std::vector<int>>& getGrille();
     void reset();
     void save(const std::string& filename);
     void load(const std::string& filename);

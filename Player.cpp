@@ -53,7 +53,7 @@ int Player::getMoves()
     return moves_;
 }
 
-std::vector<std::vector<int>> Player::getGrille() const 
+std::vector<std::vector<int>>& Player::getGrille() 
 {
     return grille_;
 }

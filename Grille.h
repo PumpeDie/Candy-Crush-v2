@@ -32,7 +32,7 @@ public:
 
     // Identification des bonbons sélectionnés
     void selectCandy(const sf::Vector2i& gridPosition);
-/*
+
     // Vérification de la validité du déplacement
     bool isValidMove(const sf::Vector2i& source, const sf::Vector2i& destination);
 
@@ -41,7 +41,7 @@ public:
 
     // Vérification des combinaisons de bonbons
     void checkCombinations();
-*/
+
 
     void update(sf::RenderWindow* window, State& gamestate, const sf::Event& ev);
     void render(sf::RenderWindow& window);
