@@ -69,6 +69,9 @@ void Grille::selectCandy(const sf::Vector2i& gridPosition)
             // Par exemple, pour le déplacement ou l'échange de bonbons
             selectedCandyRow_ = gridPosition.y;
             selectedCandyCol_ = gridPosition.x;
+            
+            // Afficher un message de débogage indiquant le bonbon sélectionné
+            std::cout << "Bonbon sélectionné à la position : Ligne " << selectedCandyRow_ << ", Colonne " << selectedCandyCol_ << std::endl;
         }
     }
 }
