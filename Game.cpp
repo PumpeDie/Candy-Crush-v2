@@ -35,9 +35,9 @@ Game::Game() : gamestate_(State::InMenu), window(nullptr), menu(nullptr), grille
 Game::~Game()
 {
     delete window;
+    delete player;
     delete grille;
     delete menu;
-    delete player;
 }
 
 // Fonctions pour la gestion des données du joueur

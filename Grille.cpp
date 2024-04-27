@@ -61,7 +61,7 @@ void Grille::selectCandy(const sf::Vector2i& gridPosition)
         
         // Vérifier si la case de la grille à ces indices contient un bonbon
         std::vector<std::vector<int>> grille = player_->getGrille();
-        if (grille[gridPosition.y][gridPosition.x] != 0) {
+        if (grille[gridPosition.y][gridPosition.x] < 6) {
             // Sélectionner le bonbon enregistré dans la grille du joueur
             // Vous pouvez stocker ces indices pour une utilisation ultérieure
             // Par exemple, pour le déplacement ou l'échange de bonbons
@@ -119,7 +119,7 @@ void Grille::render(sf::RenderWindow& window)
             sf::CircleShape candy(15.f); // Taille arbitraire pour les bonbons
             CandyColor color = static_cast<CandyColor>(grille[i][j]); // Obtenir la couleur associée au bonbon depuis player_
             candy.setFillColor(getColorForCandy(color)); // Obtenir la couleur associée au bonbon
-            candy.setPosition(717 + i*50 + 3, 313 + j*50);
+            candy.setPosition(717 + j*50 + 3, 313 + i*50);
             window.draw(candy);
         }
     }
