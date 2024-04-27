@@ -1,6 +1,6 @@
 #include "Grille.h"
 
-Grille::Grille(Player* player) : player_(player)
+Grille::Grille(Player* player) : player_(player), selectedCandyRow_(-1), selectedCandyCol_(-1)
 {
     // Lignes verticales
 	for (int i = 0; i < 11; i++) {
@@ -34,28 +34,71 @@ Grille::~Grille()
     
 }
 
-// Fonctions
-void Grille::update(sf::RenderWindow* window, State& gamestate)
+/* Fonctions */
+void Grille::handleMouseClick(sf::RenderWindow* window)
 {
-	//window = new sf::RenderWindow(sf::VideoMode(1920, 1080), "Jeu");
-	while (window->isOpen())
-	{
-		sf::Event ev;
-		while (window->pollEvent(ev))
-		{
-			if (ev.type == sf::Event::Closed)
-				window->close();
-			if (ev.type == sf::Event::KeyPressed) 
-				if (ev.key.code == sf::Keyboard::Escape)
-				{
-                	gamestate = State::InMenu;
-                	return;
-				}
-		}
-		window->clear();
-		render(*window);
-		window->display();
-	}
+    sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
+    sf::Vector2f worldPos = window->mapPixelToCoords(mousePos);
+
+    // Vérifier si le clic de souris se trouve à l'intérieur de la zone de la grille
+    if (worldPos.x >= 714 && worldPos.x < 714 + 10 * 50 &&
+        worldPos.y >= 306 && worldPos.y < 306 + 10 * 50) {
+        
+        // Convertir les coordonnées de la souris en indices de ligne et de colonne dans la grille
+        int col = (worldPos.x - 714) / 50;
+        int row = (worldPos.y - 306) / 50;
+
+		// Identifier les bonbons sélectionnés
+        selectCandy(sf::Vector2i(col, row));
+
+		std::cout << "Position de la grille : Ligne " << row << ", Colonne " << col << std::endl;
+    }
+}
+
+void Grille::selectCandy(const sf::Vector2i& gridPosition)
+{
+    // Vérifier si les coordonnées de la grille sont valides
+    if (gridPosition.x >= 0 && gridPosition.x < 10 &&
+        gridPosition.y >= 0 && gridPosition.y < 10) {
+        
+        // Vérifier si la case de la grille à ces indices contient un bonbon
+        std::vector<std::vector<int>> grille = player_->getGrille();
+        if (grille[gridPosition.y][gridPosition.x] != 0) {
+            // Sélectionner le bonbon enregistré dans la grille du joueur
+            // Vous pouvez stocker ces indices pour une utilisation ultérieure
+            // Par exemple, pour le déplacement ou l'échange de bonbons
+            selectedCandyRow_ = gridPosition.y;
+            selectedCandyCol_ = gridPosition.x;
+        }
+    }
+}
+/*
+bool Grille::isValidMove(const sf::Vector2i& source, const sf::Vector2i& destination)
+{
+    // Implémentez la logique de vérification de la validité du mouvement ici
+}
+
+void Grille::swapCandies(const sf::Vector2i& candy1, const sf::Vector2i& candy2)
+{
+    // Implémentez la logique d'échange de bonbons ici
+}
+
+void Grille::checkCombinations()
+{
+    // Implémentez la logique de vérification des combinaisons de bonbons ici
+}
+*/
+void Grille::update(sf::RenderWindow* window, State& gamestate, const sf::Event& ev)
+{
+	if (ev.type == sf::Event::Closed)
+		window->close();
+	else if (ev.type == sf::Event::MouseButtonPressed)
+		if (ev.mouseButton.button == sf::Mouse::Left)
+			// Gérer les clics de souris gauche
+			handleMouseClick(window) ;
+	window->clear();
+	render(*window);
+	window->display();
 }
 
 void Grille::render(sf::RenderWindow& window) 

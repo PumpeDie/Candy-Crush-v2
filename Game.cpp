@@ -22,6 +22,7 @@ void Game::initMenu()
     menu = new Menu(window->getSize().x,window->getSize().y);
 }
 
+
 // Constructeurs & Destructeurs
 Game::Game() : gamestate_(State::InMenu), window(nullptr), menu(nullptr), grille(nullptr), player(nullptr)
 {
@@ -123,7 +124,15 @@ void Game::update()
             }
         }
         else if (gamestate_ == State::InGame)
-            grille->update(window, gamestate_);
+        {
+            if (ev.type == sf::Event::KeyPressed) 
+                if (ev.key.code == sf::Keyboard::Escape)
+                {
+                    gamestate_ = State::InMenu;
+                    return;
+                }
+            grille->update(window, gamestate_, ev);
+        }
     }
 }
 
