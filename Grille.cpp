@@ -50,8 +50,6 @@ void Grille::handleMouseClick(sf::RenderWindow* window)
 
 		// Identifier les bonbons sélectionnés
         selectCandy(sf::Vector2i(col, row));
-
-		std::cout << "Position de la grille : Ligne " << row << ", Colonne " << col << std::endl;
     }
 }
 
@@ -70,8 +68,12 @@ void Grille::selectCandy(const sf::Vector2i& gridPosition)
             selectedCandyRow_ = gridPosition.y;
             selectedCandyCol_ = gridPosition.x;
             
-            // Afficher un message de débogage indiquant le bonbon sélectionné
+            // Obtenir la couleur du bonbon sélectionné
+            sf::Color candyColor = getColorAtPosition(grille, gridPosition.x, gridPosition.y);
+            
+            // Afficher un message de débogage indiquant le bonbon sélectionné et sa couleur
             std::cout << "Bonbon sélectionné à la position : Ligne " << selectedCandyRow_ << ", Colonne " << selectedCandyCol_ << std::endl;
+            std::cout << "Couleur du bonbon : " << grille[gridPosition.y][gridPosition.x] << std::endl;
         }
     }
 }

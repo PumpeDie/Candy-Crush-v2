@@ -19,6 +19,18 @@ sf::Color getColorForCandy(CandyColor color) {
     }
 }
 
+sf::Color getColorAtPosition(const std::vector<std::vector<int>>& grille, int row, int col) {
+    if (row >= 0 && row < grille.size() && col >= 0 && col < grille[0].size()) {
+        // Obtenez le type de bonbon à la position spécifiée dans la grille
+        int candyType = grille[row][col];
+        // Convertissez le type de bonbon en couleur correspondante
+        return getColorForCandy(static_cast<CandyColor>(candyType));
+    } else {
+        // Si la position est en dehors des limites de la grille, retournez une couleur par défaut (par exemple, blanc)
+        return sf::Color::White;
+    }
+}
+
 Player::Player() 
 {
     score_ = 0;
