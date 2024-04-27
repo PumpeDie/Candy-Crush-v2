@@ -27,6 +27,12 @@ public:
     virtual ~Grille();
 
     /* Fonctions */
+    // Fonction pour vérifier les combinaisons et supprimer les bonbons alignés
+    void checkAndRemoveCombinations();
+
+    // Fonction pour remplir les cases vides
+    void fillEmptyCells();
+    
     // Détection des clics de souris sur les bonbons
     void handleMouseClick(sf::RenderWindow* window);
 
@@ -40,7 +46,7 @@ public:
     void swapCandies(const sf::Vector2i& candy1, const sf::Vector2i& candy2);
 
     // Vérification des combinaisons de bonbons
-    void checkCombinations();
+    bool checkCombinations(const std::vector<std::vector<int>>& grille);
 
 
     void update(sf::RenderWindow* window, State& gamestate, const sf::Event& ev);

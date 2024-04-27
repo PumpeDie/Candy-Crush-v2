@@ -104,6 +104,7 @@ void Game::update()
                     switch (menu->pressed()) {
                         case 0: // Nouvelle Partie
                             player->reset();            // Réinitialiser les données du joueur
+                            grille->checkAndRemoveCombinations();
                             gamestate_ = State::InGame;
                             break;
                         case 1: // Continuer

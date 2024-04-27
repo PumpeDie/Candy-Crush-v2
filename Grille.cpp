@@ -35,6 +35,47 @@ Grille::~Grille()
 }
 
 /* Fonctions */
+void Grille::checkAndRemoveCombinations()
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> distrib(0, 5); // Pour 6 couleurs différentes
+	
+	// Récupérer la grille du joueur
+    auto& grille = player_->getGrille();
+
+    // Boucle pour vérifier et supprimer les combinaisons
+    while (checkCombinations(grille)) {
+        // Parcourir chaque bonbon dans la grille
+        for (int i = 0; i < grille.size(); ++i) {
+            for (int j = 0; j < grille[i].size(); ++j) {
+                int candyType = grille[i][j];
+
+                // Vérifier s'il y a une combinaison horizontale
+                if (j < grille[i].size() - 2 &&
+                    grille[i][j + 1] == candyType &&
+                    grille[i][j + 2] == candyType) {
+                    // Supprimer un des bonbons alignés horizontalement
+                    grille[i][j + 1] = distrib(gen);
+                }
+
+                // Vérifier s'il y a une combinaison verticale
+                if (i < grille.size() - 2 &&
+                    grille[i + 1][j] == candyType &&
+                    grille[i + 2][j] == candyType) {
+                    // Supprimer un des bonbons alignés verticalement
+                    grille[i + 1][j] = distrib(gen);
+                }
+            }
+        }
+    }
+}
+
+void Grille::fillEmptyCells()
+{
+
+}
+
 void Grille::handleMouseClick(sf::RenderWindow* window)
 {
     sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
@@ -50,13 +91,19 @@ void Grille::handleMouseClick(sf::RenderWindow* window)
 
         // Identifier les bonbons sélectionnés
         if (selectedCandyRow_ == -1 && selectedCandyCol_ == -1) {
-            // Si aucun bonbon n'est sélectionné, sélectionner le bonbon cliqué
+            // Sélectionner le bonbon cliqué
             selectCandy(sf::Vector2i(col, row));
         } else {
-            // Si un bonbon est déjà sélectionné, échanger les bonbons
+            // Si un bonbon est déjà sélectionné, vérifier si le mouvement est valide
             sf::Vector2i firstSelected(selectedCandyCol_, selectedCandyRow_);
             sf::Vector2i secondSelected(col, row);
-            swapCandies(firstSelected, secondSelected);
+            
+            // Vérifier si le mouvement est valide avant d'effectuer l'échange
+            if (isValidMove(firstSelected, secondSelected)) {
+                // Échanger les bonbons
+                swapCandies(firstSelected, secondSelected);
+            }
+
             // Réinitialiser les bonbons sélectionnés
             selectedCandyRow_ = -1;
             selectedCandyCol_ = -1;
@@ -85,6 +132,7 @@ bool Grille::isValidMove(const sf::Vector2i& source, const sf::Vector2i& destina
     // Vérifier si les positions source et destination sont valides dans la grille
     if (source.x < 0 || source.x >= 10 || source.y < 0 || source.y >= 10 ||
         destination.x < 0 || destination.x >= 10 || destination.y < 0 || destination.y >= 10) {
+        std::cout << "Mouvement invalide : positions en dehors des limites de la grille." << std::endl;
         return false;
     }
 
@@ -95,11 +143,18 @@ bool Grille::isValidMove(const sf::Vector2i& source, const sf::Vector2i& destina
         // Le mouvement est valide s'il est horizontal ou vertical
         // Assurer que la destination ne dépasse pas les limites de la grille
         if (destination.x >= 0 && destination.x < 10 && destination.y >= 0 && destination.y < 10) {
-            return true;
-		}
+            // Vérifier si le mouvement forme une combinaison de bonbons
+            std::vector<std::vector<int>> tempGrille = player_->getGrille();
+            std::swap(tempGrille[source.y][source.x], tempGrille[destination.y][destination.x]);
+            bool validMove = checkCombinations(tempGrille);
+			if (!validMove) {
+                std::cout << "Mouvement invalide : aucun alignement de bonbons après l'échange." << std::endl;
+            }
+            return validMove;
+        }
     }
-
     // Si aucune des conditions ci-dessus n'est remplie, le mouvement n'est pas valide
+    std::cout << "Mouvement invalide : les positions ne sont pas adjacentes." << std::endl;
     return false;
 }
 
@@ -107,15 +162,44 @@ void Grille::swapCandies(const sf::Vector2i& candy1, const sf::Vector2i& candy2)
 {
     // Vérifier si le mouvement est valide
     if (isValidMove(candy1, candy2)) {
-        // Échanger les bonbons aux positions source et destination dans la grille
-        std::vector<std::vector<int>>& grille = player_->getGrille();
-        std::swap(grille[candy1.y][candy1.x], grille[candy2.y][candy2.x]);
+        // Effectuer l'échange temporaire dans la grille
+        std::vector<std::vector<int>> tempGrille = player_->getGrille();
+        std::swap(tempGrille[candy1.y][candy1.x], tempGrille[candy2.y][candy2.x]);
+
+        // Vérifier si le mouvement forme une combinaison
+        if (checkCombinations(tempGrille)) {
+            // Si le mouvement est valide et forme une combinaison, effectuer l'échange dans la grille du joueur
+            std::swap(player_->getGrille()[candy1.y][candy1.x], player_->getGrille()[candy2.y][candy2.x]);
+        }
     }
 }
 
-void Grille::checkCombinations()
+bool Grille::checkCombinations(const std::vector<std::vector<int>>& grille)
 {
-    // Implémentez la logique de vérification des combinaisons de bonbons ici
+    // Logique de vérification des combinaisons de bonbons
+
+    // Parcourir chaque bonbon dans la grille
+    for (int i = 0; i < grille.size(); i++) {
+        for (int j = 0; j < grille[i].size(); j++) {
+            int candyType = grille[i][j];
+
+            // Vérifier s'il y a une combinaison horizontale
+            if (j < grille[i].size() - 2 &&
+                grille[i][j + 1] == candyType &&
+                grille[i][j + 2] == candyType) {
+                return true; // Une combinaison horizontale est trouvée
+            }
+
+            // Vérifier s'il y a une combinaison verticale
+            if (i < grille.size() - 2 &&
+                grille[i + 1][j] == candyType &&
+                grille[i + 2][j] == candyType) {
+                return true; // Une combinaison verticale est trouvée
+            }
+        }
+    }
+    // Aucune combinaison n'a été trouvée
+    return false;
 }
 
 
