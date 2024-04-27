@@ -76,13 +76,6 @@ void Grille::selectCandy(const sf::Vector2i& gridPosition)
             // Sélectionner le bonbon enregistré dans la grille du joueur
             selectedCandyRow_ = gridPosition.y;
             selectedCandyCol_ = gridPosition.x;
-            
-            // Obtenir la couleur du bonbon sélectionné
-            sf::Color candyColor = getColorAtPosition(grille, gridPosition.x, gridPosition.y);
-            
-            // Afficher un message de débogage indiquant le bonbon sélectionné et sa couleur
-            std::cout << "Bonbon sélectionné à la position : Ligne " << selectedCandyRow_ << ", Colonne " << selectedCandyCol_ << std::endl;
-            std::cout << "Couleur du bonbon : " << grille[gridPosition.y][gridPosition.x] << std::endl;
         }
     }
 }
@@ -117,9 +110,6 @@ void Grille::swapCandies(const sf::Vector2i& candy1, const sf::Vector2i& candy2)
         // Échanger les bonbons aux positions source et destination dans la grille
         std::vector<std::vector<int>>& grille = player_->getGrille();
         std::swap(grille[candy1.y][candy1.x], grille[candy2.y][candy2.x]);
-
-        // Mettre à jour l'affichage des bonbons après l'échange
-        // Vous pouvez appeler la fonction render() ici ou gérer cela dans la fonction update() si nécessaire
     }
 }
 

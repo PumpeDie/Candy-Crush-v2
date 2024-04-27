@@ -23,7 +23,6 @@ enum CandyColor {
     CYAN = 5
 };
 sf::Color getColorForCandy(CandyColor color);
-sf::Color getColorAtPosition(const std::vector<std::vector<int>>& grille, int row, int col);
 
 class Player 
 {
