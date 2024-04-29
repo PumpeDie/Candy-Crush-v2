@@ -2,7 +2,7 @@
 #include "Menu.h"
 
 // Fonctions du menu principal
-Menu::Menu(float width, float height) 
+Menu::Menu(float width, float height)
 {
 	// Importation de la police d'écriture
 	font_.loadFromFile("assets/fonts/Gatrich.otf");
@@ -34,7 +34,7 @@ Menu::Menu(float width, float height)
 	selected_ = 0;
 }
 
-Menu::~Menu() 
+Menu::~Menu()
 {
 
 }
@@ -70,6 +70,6 @@ void Menu::update()
 
 void Menu::render(sf::RenderWindow& window)
 {
-    for (int i = 0; i<4; i++)
-        window.draw(menuprincipal[i]);
+	for (int i = 0; i < 4; i++)
+		window.draw(menuprincipal[i]);
 }

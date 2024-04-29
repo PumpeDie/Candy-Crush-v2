@@ -8,7 +8,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
-// Auteur : Samuel
+// Auteur : Samuel et Marie
 
 // Declaration pour le type State
 enum State { InMenu, InGame };
@@ -30,6 +30,9 @@ public:
     // Fonction pour v�rifier les combinaisons et supprimer les bonbons align�s
     void checkAndRemoveCombinations();
 
+    // Fonction pour remplir les cases vides
+    void fillEmptyCells();
+
     // D�tection des clics de souris sur les bonbons
     void handleMouseClick(sf::RenderWindow* window);
 
@@ -46,7 +49,7 @@ public:
     bool checkCombinations(const std::vector<std::vector<int>>& grille);
 
     // R�arrange la grille 
-    void réajustementgrille();
+    void reajustementgrille();
 
     //Suppression des bonbons contigu
     void suppressionBonbons();

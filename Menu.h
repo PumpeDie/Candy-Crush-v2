@@ -1,3 +1,4 @@
+
 #ifndef MENU_H
 #define MENU_H
 
@@ -8,13 +9,13 @@
 #include <SFML/Window.hpp>
 
 // Auteur : Samuel
-class Menu 
+class Menu
 {
 private:
 	sf::Text menuprincipal[4];
 	sf::Font font_;
 	int selected_;
-public :
+public:
 	// Constructeurs et Destructeurs
 	Menu(float width, float height);
 	virtual ~Menu();
@@ -23,9 +24,9 @@ public :
 	void MoveUp();
 	void MoveDown();
 	void setSelected(int n);
-	int pressed() {return selected_;}
+	int pressed() { return selected_; }
 
-    void update();
-    void render(sf::RenderWindow& window);
+	void update();
+	void render(sf::RenderWindow& window);
 };
 #endif

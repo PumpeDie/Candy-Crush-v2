@@ -3,8 +3,7 @@
 
 #include "Menu.h"
 #include "Grille.h"
-
-// Auteur : Samuel
+// Auteur : Marie
 class Game
 {
 private:
@@ -20,7 +19,8 @@ private:
     // Joueur
     Player* player;
 
-    // Fonctions privÃ©es
+
+    // Fonctions privées
     void initWindow();
     void initMenu();
     void initGrille();
@@ -31,7 +31,7 @@ public:
     Game();
     virtual ~Game();
 
-    // Fonctions pour la gestion des donnÃ©es du joueur
+    // Fonctions pour la gestion des données du joueur
     int getPlayerScore() const;
     int getPlayerMoves() const;
 

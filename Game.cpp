@@ -19,7 +19,7 @@ void Game::initPlayer()
 
 void Game::initMenu()
 {
-    menu = new Menu(window->getSize().x,window->getSize().y);
+    menu = new Menu(window->getSize().x, window->getSize().y);
 }
 
 
@@ -41,7 +41,7 @@ Game::~Game()
 }
 
 // Fonctions pour la gestion des données du joueur
-int Game::getPlayerScore() const 
+int Game::getPlayerScore() const
 {
     std::ifstream save("data.dat");
     if (!save.is_open()) {
@@ -53,7 +53,7 @@ int Game::getPlayerScore() const
     return score;
 }
 
-int Game::getPlayerMoves() const 
+int Game::getPlayerMoves() const
 {
     std::ifstream save("data.dat");
     if (!save.is_open()) {
@@ -69,7 +69,7 @@ int Game::getPlayerMoves() const
 // Fonctions
 void Game::run()
 {
-    while (window->isOpen()) 
+    while (window->isOpen())
     {
         update();
         render();
@@ -85,7 +85,7 @@ void Game::update()
             window->close();
         else if (gamestate_ == State::InMenu)
         {
-            if (ev.type == sf::Event::KeyPressed) 
+            if (ev.type == sf::Event::KeyPressed)
             {
                 if (ev.key.code == sf::Keyboard::Up) {
                     menu->MoveUp();
@@ -99,26 +99,26 @@ void Game::update()
                     window->close();
                     break;
                 }
-                if (ev.key.code == sf::Keyboard::Return) 
+                if (ev.key.code == sf::Keyboard::Return)
                 {
                     switch (menu->pressed()) {
-                        case 0: // Nouvelle Partie
-                            player->reset();            // Réinitialiser les données du joueur
-                            grille->checkAndRemoveCombinations();
-                            gamestate_ = State::InGame;
-                            break;
-                        case 1: // Continuer
-                            player->load("data.dat");   // Charger le jeu depuis une sauvegarde
-                            gamestate_ = State::InGame;
-                            break;
-                        case 2: // Sauvegarder
-                            player->save("data.dat");   // Sauvegarder le jeu dans un fichier
-                            break;
-                        case 3: // Quitter
-                            window->close();
-                            break;
-                        default:
-                            break;
+                    case 0: // Nouvelle Partie
+                        player->reset();            // Réinitialiser les données du joueur
+                        grille->checkAndRemoveCombinations();
+                        gamestate_ = State::InGame;
+                        break;
+                    case 1: // Continuer
+                        player->load("data.dat");   // Charger le jeu depuis une sauvegarde
+                        gamestate_ = State::InGame;
+                        break;
+                    case 2: // Sauvegarder
+                        player->save("data.dat");   // Sauvegarder le jeu dans un fichier
+                        break;
+                    case 3: // Quitter
+                        window->close();
+                        break;
+                    default:
+                        break;
                     }
                     break;
                 }
@@ -126,7 +126,7 @@ void Game::update()
         }
         else if (gamestate_ == State::InGame)
         {
-            if (ev.type == sf::Event::KeyPressed) 
+            if (ev.type == sf::Event::KeyPressed)
                 if (ev.key.code == sf::Keyboard::Escape)
                 {
                     gamestate_ = State::InMenu;
