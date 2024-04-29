@@ -39,9 +39,9 @@ public:
     // Fonctions
     int getScore();
     int getMoves();
-    //décrémente d'un le nombre de coups restant
+    //DÃ©crÃ©mente d'un le nombre de coups restant
     void setMove();
-    //augmente le score
+    //Augmente le score
     void upscore();
     std::vector<std::vector<int>> getGrille() const;
     void reset();
@@ -49,7 +49,7 @@ public:
     void load(const std::string& filename);
     void setGrille(const std::vector<std::vector<int>> newGrille);
 
-    // Fonction pour initialiser la grille avec des bonbons aléatoires
+    // Fonction pour initialiser la grille avec des bonbons alÃ©atoires
     void initRandomCandies();
 };
 #endif

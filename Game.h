@@ -3,12 +3,14 @@
 
 #include "Menu.h"
 #include "Grille.h"
+
 // Auteur : Marie
 class Game
 {
 private:
     State gamestate_;
     sf::RenderWindow* window;
+	sf::Font font;
 
     // Menu
     Menu* menu;
@@ -20,7 +22,7 @@ private:
     Player* player;
 
 
-    // Fonctions privées
+    // Fonctions privï¿½es
     void initWindow();
     void initMenu();
     void initGrille();
@@ -31,7 +33,7 @@ public:
     Game();
     virtual ~Game();
 
-    // Fonctions pour la gestion des données du joueur
+    // Fonctions pour la gestion des donnÃ©es du joueur
     int getPlayerScore() const;
     int getPlayerMoves() const;
 

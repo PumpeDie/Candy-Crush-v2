@@ -11,7 +11,7 @@
 // Auteur : Samuel et Marie
 
 // Declaration pour le type State
-enum State { InMenu, InGame };
+enum State { InMenu, InGame, GameOver };
 
 class Grille
 {
@@ -27,7 +27,7 @@ public:
     virtual ~Grille();
 
     /* Fonctions */
-    // Fonction pour v�rifier les combinaisons et supprimer les bonbons align�s
+    // Fonction pour vérifier les combinaisons et supprimer les bonbons align�s
     void checkAndRemoveCombinations();
 
     // Fonction pour remplir les cases vides
@@ -36,24 +36,25 @@ public:
     // D�tection des clics de souris sur les bonbons
     void handleMouseClick(sf::RenderWindow* window);
 
-    // Identification des bonbons s�lectionn�s
+    // Identification des bonbons sélectionnés
     void selectCandy(const sf::Vector2i& gridPosition);
 
-    // V�rification de la validit� du d�placement
+    // Vérification de la validité du déplacement
     bool isValidMove(const sf::Vector2i& source, const sf::Vector2i& destination);
 
-    // �change de bonbons
+    // Échange de bonbons
     void swapCandies(const sf::Vector2i& candy1, const sf::Vector2i& candy2);
 
-    // V�rification des combinaisons de bonbons
+    // Vérification des combinaisons de bonbons
     bool checkCombinations(const std::vector<std::vector<int>>& grille);
 
-    // R�arrange la grille 
+    // Réarrange la grille 
     void reajustementgrille();
 
     //Suppression des bonbons contigu
     void suppressionBonbons();
-    // Tomb�e des bonbons de la grille
+    
+    // Tombée des bonbons de la grille
     void faireTomberBonbons();
 
 

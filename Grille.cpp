@@ -157,7 +157,7 @@ void Grille::handleMouseClick(sf::RenderWindow* window)
 {
     int moves = player_->getMoves();
     if (moves <= 0) {
-        std::cout << "Vous n'avez plus de mouvement restant";
+        std::cout << "Vous n'avez plus de mouvement restant" << std::endl;
     }
     else {
         sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
@@ -187,8 +187,8 @@ void Grille::handleMouseClick(sf::RenderWindow* window)
                     swapCandies(firstSelected, secondSelected);
                     reajustementgrille();
                     player_->setMove();
-                    std::cout << "Score :" << player_->getScore();
-                    std::cout << "Coups :" << player_->getMoves();
+                    std::cout << "Score :" << player_->getScore() << std::endl;
+                    std::cout << "Coups :" << player_->getMoves() << std::endl;
                     render(*window);
                 }
 

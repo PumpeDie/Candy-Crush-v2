@@ -73,6 +73,11 @@ void Game::run()
     {
         update();
         render();
+
+        if (gamestate_ == State::InGame && getPlayerMoves() == 0)
+        {
+            gamestate_ = State::GameOver;
+        }
     }
 }
 
@@ -133,6 +138,30 @@ void Game::update()
                     return;
                 }
             grille->update(window, gamestate_, ev);
+        }
+        else if (gamestate_ == State::GameOver)
+        {
+            window->clear();
+
+            sf::Text gameOverText;
+            font.loadFromFile("assets/fonts/Gatrich.otf");
+            gameOverText.setFont(font); 
+            gameOverText.setString("Game Over");
+            gameOverText.setCharacterSize(50);
+            gameOverText.setFillColor(sf::Color::Red);
+            gameOverText.setPosition(window->getSize().x / 2 - gameOverText.getGlobalBounds().width / 2, window->getSize().y / 2 - gameOverText.getGlobalBounds().height / 2);
+
+            sf::Text scoreText;
+            scoreText.setFont(font); 
+            scoreText.setString("Score: " + std::to_string(getPlayerScore()));
+            scoreText.setCharacterSize(30);
+            scoreText.setFillColor(sf::Color::White);
+            scoreText.setPosition(window->getSize().x / 2 - scoreText.getGlobalBounds().width / 2, gameOverText.getPosition().y + gameOverText.getGlobalBounds().height + 20);
+
+            window->draw(gameOverText);
+            window->draw(scoreText);
+            window->display();
+            return;
         }
     }
 }
