@@ -1,3 +1,4 @@
+
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -24,7 +25,7 @@ enum CandyColor {
 };
 sf::Color getColorForCandy(CandyColor color);
 
-class Player 
+class Player
 {
 private:
     int score_;
@@ -38,12 +39,17 @@ public:
     // Fonctions
     int getScore();
     int getMoves();
-    std::vector<std::vector<int>>& getGrille();
+    //décrémente d'un le nombre de coups restant
+    void setMove();
+    //augmente le score
+    void upscore();
+    std::vector<std::vector<int>> getGrille() const;
     void reset();
     void save(const std::string& filename);
     void load(const std::string& filename);
+    void setGrille(const std::vector<std::vector<int>> newGrille);
 
-    // Fonction pour initialiser la grille avec des bonbons alÃ©atoires
+    // Fonction pour initialiser la grille avec des bonbons aléatoires
     void initRandomCandies();
 };
 #endif
